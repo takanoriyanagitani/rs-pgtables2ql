@@ -1,0 +1,39 @@
+type PgTable {
+	tableCatalog: String
+	tableSchema: String
+	tableName: String
+	tableType: String
+	selfReferencingColumnName: String
+	referenceGeneration: String
+	userDefinedTypeCatalog: String
+	userDefinedTypeSchema: String
+	userDefinedTypeName: String
+	isInsertableInto: String
+	isTyped: String
+	commitAction: String
+}
+
+type Query {
+	tables(
+		"""
+		Filter tables by schema name. Use '%' for wildcard matching.
+		"""
+		schemaPattern: String! = "%",
+		"""
+		Filter tables by table name. Use '%' for wildcard matching.
+		"""
+		namePattern: String! = "%"
+	): [PgTable!]!
+}
+
+"""
+Directs the executor to include this field or fragment only when the `if` argument is true.
+"""
+directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+"""
+Directs the executor to skip this field or fragment when the `if` argument is true.
+"""
+directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+schema {
+	query: Query
+}
